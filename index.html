@@ -5,35 +5,56 @@
 </head>
 <body>
     <h1>To Do List Sederhana</h1>
+    <p id="taskCounter">Total Tasks: </p>
     <input type="text" id="newTask">
     <button onclick="addTask()">Add Task</button>
     <ul id="taskList"></ul>
 
     <script>
+        // Fungsi untuk enambahkan jumlah update task
+        function updateTaskCounter() {
+            const totalTasks = document.getElementById('taskList').children.length;
+            document.getElementById('taskCounter').innerText = 'Total Tasks: ' + totalTasks;
+        }    
+
         function addTask() {
+            // Mengambil nilai dari input
             const newTask = document.getElementById('newTask').value;
                 if(newTask.trim() === '') {
                     console.log('oops harus diisi full')
                     return
                 }
 
+            // Sebelum nilai masuk, peringatkan aturan isi formnya
+            const Task = document.getElementById('newTask').value;
+            if(newTask.length < 3) {
+                alert('Panjang text minimal 3 huruf')
+                return
+            }
+            if(newTask.length > 10) {
+                alert('Panjang text maximal 10 huruf')
+                return
+            }
+
+            // untuk menambahlan nilai ke list
             const newLi = document.createElement('li');
             newLi.textContent = newTask
 
-            
-
+            // membuat tombol delete
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Hapus';
             deleteBtn.onclick = function() {
                 newLi.remove();
+                updateTaskCounter();
             }
             newLi.appendChild(deleteBtn)
 
+            // jika berhasil menginput nilai, hasilnya:
             console.log('program selanjutnya')
 
             document.getElementById('taskList').appendChild(newLi);
-
             document.getElementById('newTask').value = '';
+            updateTaskCounter();
 
         }
         document.getElementById('newTask').addEventListener('keydown', function(event){
